@@ -3,7 +3,7 @@
 A basic Django app using:
 
 - Django
-- Pollow for images
+- Pillow for images
 - Requests (for external HTTP requests)
 
 ## 🚀 Setup
