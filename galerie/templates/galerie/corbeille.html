@@ -1,0 +1,147 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<style>
+        /* ***gallery styles*** */
+        header{
+                position: fixed;
+                height: 70px;
+                width: 100%;
+        }
+        .gallery .nav{
+                display: flex;
+                align-items: center;
+        }
+        .gallery .nav .folder-name{
+                margin: auto;
+        }
+        .gallery .nav .folder-name p{
+                font-size:1.2rem;
+        }
+        .back{
+                font-size:24px;
+                margin-left:10px;
+        }
+        /* ***main styles*** */
+        main{
+                padding-top: 100px;
+        }
+        @media only screen and (max-width:600px){
+                main.gallery .images{
+                        margin: auto 2%;
+                }
+        }
+        main.gallery img.image{
+                width:100%;
+                border-radius:8px;
+        }
+        main.gallery .image{
+                padding:2px;
+                border-radius:2px;
+        }
+        main.gallery .image .item{
+                border-radius:3px;
+                padding:1px;
+        }
+        main.gallery img.image {
+          width: 100%;
+          border-radius: 8px;
+          object-fit: cover;
+          height: 200px;
+        }
+    @media only screen and (max-width:600px){
+                main.gallery .images{
+                        margin: auto 2%;
+                }
+        }
+        main.gallery img.image{
+                width:100%;
+                border-radius:8px;
+        }
+        main.gallery .image{
+                padding:2px;
+                border-radius:2px;
+        }
+        main.gallery .image .item{
+                border-radius:3px;
+                padding:1px;
+        }
+        main.gallery img.image {
+          width: 100%;
+          border-radius: 8px;
+          object-fit: cover;
+          height: 200px;
+        }
+        @media only screen and (max-width:420px){
+                main.gallery img.image{
+                        height: 150px;
+                }
+        }
+        @media only screen and (min-width:600px - max-width:850px){
+                main.gallery img.image{
+                        height: 150px;
+                }
+        }
+        /* **left navigation** */
+        main.gallery .left-nav{
+                padding-left: 24px !important;
+        }
+        main.gallery .left-nav h4{
+                margin: 0;
+                font-size:2rem;
+        }
+        main.gallery .left-nav p.new-image{
+                font-size:1.3rem ;
+                cursor:pointer;
+        }
+        main.gallery .left-nav p:hover{
+                color:#03a9f4;
+        }
+</style>
+<body>
+        <header class="gallery">
+                <div class=" row nav light-blue lighten-2">
+                        <div class="back hide-on-med-and-up">
+                                <a href="{% url 'home'  %}" class="black-text">Retour</a>
+                        </div>
+                        <div class="folder-name"><p>{{folder.name}}</p></div>
+                </div>
+        </header>
+        <main class="gallery row">
+                <div class="col m3 l2 left-nav hide-on-small-only">
+                        <h4 class="light-blue-text">Jolie photo</h4>
+                        <p class="new-image"><a href="{% url 'home' %}">Acceuil</a></p>
+                        <p class="new-image">Upload image</p>
+                        <p></p>
+                </div>
+                <div class="row col s12 m8 ">
+                        <div id="images" class="images">
+                                {% for photo in img %}
+                                <div class="image col s6 m4 l4">
+                                        <div class="grey lighten-4 item">
+                                                <img src="{{photo.img.url}}" class="image">
+                                         <a href="{% url 'delete_old' photo.id %}">delete</a>
+                                         <a href="{% url 'restore'  photo.id %}">restore</a>
+                                        </div>
+                                </div>
+																{% endfor %}
+                        </div>
+                </div>
+
+</main>
+<script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+
+//sumbmit form-upload image
+let form = document.getElementById('form');
+let file = document.getElementById('image');
+
+file.addEventListener('change',function(){
+        form.submit();
+});
+</script>
+</body>
+{% endblock %}

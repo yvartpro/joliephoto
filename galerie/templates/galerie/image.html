@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% block title %} {% endblock %}
+{% load static %}
+{% block content %}
+
+<!--<style>
+.image .gallery {
+     display: flex;
+     flex-wrap:wrap ;
+     justify-content:center ;
+     padding: 20px;
+   }
+
+.image  .gallery-item {
+     margin: 2px;
+     width: 50%;
+     height: 50%;
+   }
+
+.image .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      
+   }
+.image  img{
+     width: 100%;
+     height: auto;
+   }
+.image  #import{
+    margin-top: 10px;
+    position: fixed;
+   }      
+</style>
+ <header>
+  <div class="row" style="background-color: aqua;">
+   <div class="row col s12 m8 l8 offset-m2 offset-l2 left" style="display:flex;align-items:center;">
+      <div class="col s3">
+       <img src="./photos/geogette12.jpg" style="width: 50px; margin-top:9px ; border-radius: 25px;">  
+      </div>
+       <div class="col s7">
+        <center><span style="font-size: 1.4rem;"><b>{{folder.name}}</b></span></center>
+       </div>
+       <div class="col s2 l1 right">                          
+        <i class="large material-icons" style="font-size: 35px;">info</i>
+       </div>
+   </div>
+   </div>
+ </header>
+<main class="image">
+   <div class="container">
+		<a href="{% url 'home' %}" class="blue-text">Back</a>
+    <div class="row ">
+      <div class="row">
+           {% if photo %}
+				{% for img in photo  %}
+        <div class="gallery-item col s4">
+            {% if img.image %}
+            <img src="{{img.image.url}}" alt="{{img.image.url}}">
+             <a href="{% url 'delete_image' img.id %}">delete</a>
+            {% endif %}
+        </div>
+				{% endfor  %}
+         {% else %}
+             <p>Folder is empty </p>
+         {% endif %}
+    </div>
+   </div>
+<div class="fixed-action-btn">
+ <form action="{% url 'uploadimage' %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token  %}
+  <input type="file" name="image" id="image" hidden>
+  <input type="text" name="folder" value="{{folder.name}}" hidden>
+  <label id="selectImg" for="image"><a class="btn-floating btn-large light-blue lighten-2"><i class="large material-icons"> file_upload </i></a></label>
+  <button type="submit" id="submit" class="btn-floating btn-large light-blue lightn-2">upload</button>
+ </form>
+</div>
+</main>-->
+<style>
+	/* ***gallery styles*** */
+	header{
+		position: fixed;
+		height: 70px;
+		width: 100%;
+	}
+	.gallery .nav{
+		display: flex;
+		align-items: center;
+	}
+	.gallery .nav .folder-name{
+		margin: auto;
+	}
+	.gallery .nav .folder-name p{
+		font-size:1.2rem;
+	}
+	.back{
+		font-size:24px;
+		margin-left:10px;
+	}
+	/* ***main styles*** */
+	main{
+		padding-top: 100px;
+	}
+	@media only screen and (max-width:600px){
+		main.gallery .images{
+			margin: auto 2%;
+		}
+	}
+	main.gallery img.image{
+		width:100%;
+		border-radius:8px;
+	}
+	main.gallery .image{
+		padding:2px;
+		border-radius:2px;
+	}
+	main.gallery .image .item{
+		border-radius:3px;
+		padding:1px;
+	}
+	main.gallery img#img {
+	  width: 100%;
+	  border-radius: 8px;
+	  object-fit: cover;
+	  height: 200px;
+	}
+	@media only screen and (max-width:420px){
+		main.gallery img#img{
+			height: 150px;
+		}
+	}
+	@media only screen and (min-width:600px - max-width:850px){
+		main.gallery img#img{
+			height: 150px;
+		}
+	}
+	/* **left navigation** */
+	main.gallery .left-nav{
+		padding-left: 24px !important;
+	}
+	main.gallery .left-nav h4{
+		margin: 0;
+		font-size:2rem;
+	}
+	main.gallery .left-nav p.new-image{
+		font-size:1.3rem ;
+		cursor:pointer;
+	}
+	main.gallery .left-nav p:hover{
+		color:#03a9f4;
+	}
+</style>
+<body>
+	<header class="gallery">
+		<div class=" row nav light-blue lighten-2">
+			<div class="back hide-on-med-and-up">
+				<a href="{% url 'home'  %}" class="black-text">Retour</a>
+			</div>
+			<div class="folder-name"><p>{{folder.name}}</p></div>
+		</div>
+	</header>
+	<main class="gallery row">
+		<div class="col m3 l2 left-nav hide-on-small-only">
+			<h4 class="light-blue-text">Jolie photo</h4>
+			<p class="new-image"><a href="{% url 'home' %}">Acceuil</a></p>
+			<label for="image" class="black-text"><p class="new-image">Upload image</p></label>
+			<p></p>
+		</div>
+		<div class="row col s12 m8 ">
+			<div id="images" class="images">
+				{% if photo %}
+				{% for img in photo %}
+				<div class="image col s6 m4 l4">
+					{% if img.image %}
+					<div class="grey lighten-4 item" data-target="zoomImg" >
+						<img src="{{img.image.url}}" id="img" class="materialboxed">
+					</div>
+					<a href="{% url 'delete_image' img.id %}"><i class="material-icons red-text lighten-2">delete</i></a>
+					{% endif %}
+				</div>
+				{% endfor %}
+				{% else %}
+					<p class="center-align light-blue-text lighten-2">Dossier vide.</p>
+				{% endif %}
+			</div>
+			<div id="zoomImg" class="modal">
+				<div class="modal-content">
+					<img src="{{img.image.url}}" class="">
+				</div>
+			</div>
+		</div>	
+    <div class="fixed-action-btn hide-on-med-and-up">
+      <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2">
+        <i class="large material-icons">add</i>
+      </a>
+    </div>
+<div class="fixed-action-btn">
+ <form id="form" action="{% url 'uploadimage' %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token  %}
+  <input type="file" id="image" name="image" id="image" hidden>
+  <input type="text" name="folder" value="{{folder.name}}" hidden>
+  <label for="image"><a class="btn-floating btn-large light-blue lighten-2"><i class="large material-icons"> file_upload </i></a></label>
+ </form>
+</div>
+
+	</main>
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+  	var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+//zoom image material-boxed
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.materialboxed');
+    var instances = M.Materialbox.init(elems);
+  });
+	
+//sumbmit form-upload image
+let form = document.getElementById('form');
+let file = document.getElementById('image');
+
+file.addEventListener('change',function(){
+	form.submit();
+});
+</script>
+</body>
+
+{% endblock %}

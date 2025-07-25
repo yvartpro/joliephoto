@@ -1,0 +1,123 @@
+{% extends 'base.html'  %}
+{% block title %} {% endblock %}
+{% block content %}
+
+<style>
+	img{
+			width: 100px;
+			height: 50px;
+			margin: 3px;
+		}
+ .gallery {
+     display: flex;
+     flex-wrap: ;
+     justify-content: ;
+     padding: 20px;
+     
+   }
+.nom{
+display:block;
+}
+   .gallery-item {
+     margin: 2px;
+     width: 50%;
+     height: 50%;
+     border:1px solid;
+     border-radius:2px;
+   }  	
+
+   .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+   }
+   img{
+     width: 100%;
+     height: auto;
+   }
+.header{
+align-items:center;
+display:flex;
+}
+.albums{
+display:flex;
+flex-wrap:wrap;
+}
+</style>
+
+ <header>
+  <div class="row" style="background-color: aqua;">
+   <div class="row col s12 m8 l8 offset-m2 offset-l2 left">
+      <div class="col s3">
+       <img src="./photos/geogette12.jpg" style="width: 50px; margin-top:9px ; border-radius: 25px;">  
+      </div>
+       <div class="col s7">
+        <center><span style="font-size: 40px;"><b>Album</b></span></center>
+       </div>
+       <div class="col s2 l1 right">                          
+        <i class="large material-icons" style="font-size: 35px;">info</i>
+       </div>
+   </div>
+   </div>
+ </header><main>
+    <div class="row albums">
+  
+    <div class="gallery row ">
+        <div class="gallery-item col s4 l2 ">
+            <img src="champions.png" alt="Photo 5">
+
+        </div>
+                <p class="nom"> Camera</p>
+         
+                     
+
+        <!-- Ajoutez d'autres images selon vos besoins -->
+              <div class="gallery-item col s4 l2">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+           <div class="gallery-item col s4 l2">
+           <img src="champions.png" alt="Photo 3">
+        </div>
+            <div class="gallery-item col s4 l2">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+                <div class="gallery-item col s4 l2">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+                <div class="gallery-item col s4 l2">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+            <div class="gallery-item col s">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+             <div class="gallery-item">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+    </div>
+  </div>	
+    <button data-target="info1" class="btn modal-trigger right "><i class="material-icons ">add</i></button>
+ <div id="info1" class="modal">
+  <form action="" method="POST">
+   <div class="modal-content">
+      <div class="input-field col s12 m6">
+	<h5>Create a new folder</h5>
+     {%  csrf_token %}
+	<input type="text" name="folder">
+      </div>
+ <div>
+   <button type="submit"><a href="#!" class="waves-effect waves-green btn-flat col " >Ok</a></button>
+   <button><a href="#!" class="modal-close waves-effect waves-green btn-flat">ignorer</a></button>
+ </div>
+ </form>
+</div>
+</main>
+
+		<script>
+	document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('.modal');
+			var instances = M.Modal.init(elems);
+		});
+</script>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %} {% endblock %}
+{% block content %}
+
+<style>
+.gallery {
+     display: flex;
+     flex-wrap:wrap ;
+     justify-content:center ;
+     padding: 20px;
+   }
+
+   .gallery-item {
+     margin: 2px;
+     width: 50%;
+     height: 50%;
+   }
+
+   .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      
+   }
+   img{
+     width: 100%;
+     height: auto;
+   }
+   #import{
+    margin-top: 10px;
+    position: fixed;
+   }      
+</style>
+ <header>
+  <div class="row" style="background-color: aqua;">
+   <div class="row col s12 m8 l8 offset-m2 offset-l2 left">
+      <div class="col s3">
+       <img src=" static /img/logo.png" style="width: 50px; margin-top:9px ; border-radius: 25px;">  
+      </div>
+       <div class="col s7">
+        <center><span style="font-size: 40px;"><b>{{folder.name}}</b></span></center>
+       </div>
+       <div class="col s2 l1 right">                          
+        <i class="large material-icons" style="font-size: 35px;">info</i>
+       </div>
+   </div>
+   </div>
+ </header>
+<main>
+   <div class="container margin-top:50px;>"
+    <a  href="{% url 'home' %}">back 
+      <i class="material-icons">arrow_back</i>
+    </a>
+    <div class="row ">
+      <div class="row">
+        <div class="gallery-item col s6">
+            <img src="champions.png" alt="Photo 4">
+        </div>
+        <div class="gallery-item col s2">
+            <img src="champions.png" alt="Photo 5">
+        </div>
+        <div class="col s6">
+         <img src="champions.png" alt="photo 6">
+        </div>
+        <div class="gallery-item col s2">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+          <div class="gallery-item col s6">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+        <div class="gallery-item col s2">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+        <div class="gallery-item col s6">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+        <div class="gallery-item col s2">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+        <div class="gallery-item col s6">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+        <div class="gallery-item col s2">
+            <img src="champions.png" alt="Photo 3">
+        </div>
+        <!-- Ajoutez d'autres images selon vos besoins -->
+    </div>
+   </div>
+<div class="fixed-action-btn">
+ <form action="{% url 'uploadimage' %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token  %}
+  <input type="file" name="image" id="image" >
+  <input type="text" name="folder" value="{{folder.name}}" hidden>
+  <label for="image"><a class="btn-floating btn-large light-blue lighten-2"><i class="large material-icons"> file_upload </i></a></label>
+  <button type="submit">upload</button>
+ </form>
+</div>
+</main>
+</body>
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems);
+    });
+
+    </script>
+{% endblock %}

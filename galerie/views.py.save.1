@@ -1,0 +1,41 @@
+from django.shortcuts import render,redirect
+from django.contrib.auth import get_user_model,authenticate,login
+# Create your views here.
+User=get_user_model()
+def signin(request):
+	if request.method=='POST':
+		email=request.POST.get('email')
+		password=request.POST.get('password')
+
+		user=authenticate(email=email,password=password)
+		if user is not None:
+			login(request,User)
+			return redirect('stockage')
+		else:
+			context = {
+				"sapor":"user is not None"
+			}
+		return render(request,'galerie/login.html',context)
+	return render(request,'galerie/login.html')
+def register(request):
+	if request.method=='POST':
+		email=request.POST.get('email')
+		pays=request.POST.get('pays')
+		password=request.POST.get('password')
+		password2=request.POST.get('password2')
+		print(password2)
+
+		if password != password2:
+			context = {
+				"sapor":"password not the same"
+			}
+			return render(request,'galerie/inscrire.html',context)
+		else:
+			user=User.objects.create_user(username=email,email=email,password=password)
+			user.pays=pays
+			user.save()
+			return redierct('signin')
+	return render(request,'galerie/inscrire.html')
+def storage(request):
+	return render(request,'')
+

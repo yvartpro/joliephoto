@@ -1,0 +1,232 @@
+{% extends 'base.html'  %}
+{% block title %} {% endblock %}
+{% load static %}
+{% block content %}
+
+<style>
+	/* ***home styles*** */
+	header{
+		position: fixed;
+		height: 70px;
+		width: 100%;
+	}
+	.home img.logo{
+		width: 50px;
+		margin: 10px;
+	}
+	.home .nav{
+		display: flex;
+		align-items: center;
+	}
+
+	/* ***main styles*** */
+	main{
+		padding-top: 100px;
+	}
+	main.home img.image{
+		width:100%;
+		border-radius:8px;
+	}
+	main.home .folders p{
+		margin:0 5px;
+	}
+	main.home .folder{
+		padding:10px;
+		border-radius:8px;
+	}
+	.folder-icon{
+		font-size:80px;
+	}
+	main.home .folder .item{
+		border-radius:8px;
+		padding:4px;
+	}
+	.home .modal-ctrl{
+		padding-left:10px;
+		padding-bottom:10px;
+	}
+	/* **left navigation** */
+	main.home .left-nav{
+		padding-left: 24px !important;
+	}
+	main.home .left-nav h4{
+		margin: 0;
+		font-size:2rem;
+	}
+	main.home .left-nav p.new-folder{
+		font-size:1.3rem ;
+		cursor:pointer;
+	}
+	main.home .left-nav p:hover{
+		color:#03a9f4;
+	}
+</style>
+<!--
+<style>
+.nom{
+display:block;
+}
+   .gallery-item img{
+     margin: 2px;
+     border:1px solid;
+     border-radius:2px;
+   }  	
+
+   .gallery-item img {
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+   }
+   img{
+     width: 100%;
+     height: auto;
+   }
+.header{
+align-items:center;
+display:flex;
+}
+.albums{
+display:flex;
+flex-wrap:wrap;
+}
+
+
+/*Yves*/
+.btn{
+	text-transform:capitalize !important;
+}
+</style>
+
+ <header>
+  <div class="row" style="background-color: aqua;">
+   <div class="row col s12 m8 l8 offset-m2 offset-l2 left">
+      <div class="col s3">
+       <img src="{% static 'img/logo.png'  %}" style="width: 50px; margin-top:9px ; border-radius: 25px;">  
+      </div>
+       <div class="col s7">
+b        <center><span style="font-size: 40px;"><b>Album</b></span></center>
+       </div>
+       <div class="col s2 l1 right">                          
+        <i class="large material-icons" style="font-size: 35px;">info</i>
+       </div>
+   </div>
+   </div>
+ </header><main>
+    <div class="row albums">
+  
+    <div class="gallery row">
+    		 {% for folder in folders %}
+						<div class="gallery-item col s4 l2">
+							<img src="{% static 'img/logo.png'  %}">
+	<a href ="{% url 'image' folder.id %}">{{folder.name}}</a>
+						</div>
+		     {% endfor %}		</div>
+  </div>	
+     
+     <div>
+         <a href="{% url 'corbeille' %}">corbeille</a>
+    </div>
+    <button data-target="info1" class="btn modal-trigger right "><i class="material-icons ">add</i></button>
+ <div id="info1" class="modal">
+  <form action="{% url 'folder' %}" method="POST">
+   <div class="modal-content">
+      <div class="input-field col s12 m6">
+	<h5>Create a new folder</h5>
+     {%  csrf_token %}
+	<input type="text" name="folder">
+      </div>
+ <div>
+   <button type="submit" class="btn waves-effect waves-green btn-flat col">Ok</button>
+   <button type="reset" class="btn modal-close waves-effect waves-green btn-flat">Ignorer</button>
+ </div>
+ </form>	
+</div>
+</main>-->
+
+	<header class="home">
+		<div class=" row nav light-blue lighten-2">
+				<img src="{% static 'img/logo.png' %}" class="logo">
+			<p class="right-align col s1 offset-s8"><a href="{% url 'signout' %}" class=""><i class="material-icons black-text">exit_to_app</i></a></p>
+		</div>
+	</header>
+	<main class="home row">
+		<div class="col m3 l2 left-nav hide-on-small-only">
+			<h4 class="light-blue-text">Jolie photo</h4>
+			<p class="new-folder modal-trigger" data-target="addFolderModal">Cr&eacute;er un dossier</p>
+			<p></p>
+		</div>
+		<div class="row col s12 m8">
+			<div id="folders" class="folders">
+				{% for folder in folders %}
+			<div class="folder col s4 m6">
+				<a href="{% url 'image' folder.id %}">
+					<div class="grey lighten-4 item">
+						<i class="material-icons folder-icon">folder</i>
+						<p class="center-align">{{folder.name}}</p>
+					</div>
+				</a>
+			</div>
+				{% endfor %}
+			</div>
+		</div>	
+    <div class="fixed-action-btn hide-on-med-and-up">
+      <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2 modal-trigger" data-target="addFolderModal">
+        <i class="large material-icons" class="folder">add</i>
+      </a>
+    </div>
+
+		<div class="fixed-action-btn">
+		  <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-2"><i class="large material-icons">add</i> </a>
+		  <ul>
+				<li><a href="{% url 'corbeille' %}" class="btn-floating red"><i class="material-icons">delete</i></a></li>
+				<li><a class="btn-floating light-blue modal-trigger" data-target="addFolderModal"><i class="material-icons">folder_open</i></a></li>
+		  </ul>
+		</div>
+      
+		<div id="addFolderModal" class="modal">
+			<form action="{% url 'folder' %}" method="POST">
+				<div class="modal-content">
+					<h5>Cr&eacute;er un dossier</h5>
+					{% csrf_token %}
+					<input type="text" name="folder">
+				</div>
+				<div class="modal-ctrl">
+					<button type="submit" class="btn waves-effect waves-green btn-flat col">Ok</button>		
+					<button type="reset" class="btn modal-close waves-effect waves-green btn-flat">Annuler</button>		
+				</div>
+			</form>
+		</div>
+<!--
+    <button data-target="info1" class="btn modal-trigger right "><i class="material-icons ">add</i></button>
+ <div id="info1" class="modal">
+  <form action="{% url 'folder' %}" method="POST">
+   <div class="modal-content">
+      <div class="input-field col s12 m6">
+	<h5>Create a new folder</h5>
+     {%  csrf_token %}
+	<input type="text" name="folder">
+      </div>
+ <div>
+   <button type="submit" class="btn waves-effect waves-green btn-flat col">Ok</button>
+   <button type="reset" class="btn modal-close waves-effect waves-green btn-flat">Ignorer</button>
+ </div>
+ </form>	
+</div>
+-->
+	</main>
+<script>
+	
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, {
+      direction: 'top',
+      hoverEnabled: false
+    });
+  });
+	
+	document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('.modal');
+			var instances = M.Modal.init(elems);
+		});
+</script>
+{% endblock %}

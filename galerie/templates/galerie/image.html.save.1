@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %} {% endblock %}
+{% block content %}
+
+<style>
+.image .gallery {
+     display: flex;
+     flex-wrap:wrap ;
+     justify-content:center ;
+     padding: 20px;
+   }
+
+.image  .gallery-item {
+     margin: 2px;
+     width: 50%;
+     height: 50%;
+   }
+
+.image .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      
+   }
+.image  img{
+     width: 100%;
+     height: auto;
+   }
+.image  #import{
+    margin-top: 10px;
+    position: fixed;
+   }      
+</style>
+ <header>
+  <div class="row" style="background-color: aqua;">
+   <div class="row col s12 m8 l8 offset-m2 offset-l2 left" style="display:flex;align-items:center;">
+      <div class="col s3">
+       <img src="./photos/geogette12.jpg" style="width: 50px; margin-top:9px ; border-radius: 25px;">  
+      </div>
+       <div class="col s7">
+        <center><span style="font-size: 1.4rem;"><b>{{folder.name}}</b></span></center>
+       </div>
+       <div class="col s2 l1 right">                          
+        <i class="large material-icons" style="font-size: 35px;">info</i>
+       </div>
+   </div>
+   </div>
+ </header>
+<main class="image">
+   <div class="container">
+		<a href="{% url 'home' %}" class="blue-text">Back</a>
+    <div class="row ">
+      <div class="row">
+				{% for img in photo  %}
+        <div class="gallery-item col s4">
+            <img src="{{img.image.url}}" alt="{{img.image.url}}">
+        </div>
+				{% endfor  %}
+    </div>
+   </div>
+<div class="fixed-action-btn">
+ <form action="{% url 'uploadimage' %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token  %}
+  <input type="file" name="image" id="image" hidden>
+  <input type="text" name="folder" value="{{folder.name}}" hidden>
+  <label id="selectImg" for="image"><a class="btn-floating btn-large light-blue lighten-2"><i class="large material-icons"> file_upload </i></a></label>
+  <button type="submit" id="submit" class="btn-floating btn-large light-blue lightn-2" style="display:none">upload</button>
+ </form>
+</div>
+</main>
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+  	var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+	//floating button
+	let selectImgBtn = document.getElementById('selectImg');
+	let submitImg = document.getElementById('submit');
+	
+	selectImgBtn.onclick = function(){
+		console.log('a); 
+	}
+</body>
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content  %}
+{% load static %}
+<style>
+.auth{
+	padding-top:40px;
+}
+.span{
+	font-size:15px;
+}
+input{
+	border:1px solid rgb(106,106,131) !important;
+	padding-left:8px !important;
+	border-radius:4px !important;
+}
+.logo img{
+	width:80px !important;
+}
+</style>
+<main class="">
+<div class="container row">
+<div class="col s12 l6 m8 offset-m2 offset-l3 auth">
+<h5 class="center-align light-blue-text lighten-2">Inscription</h5>
+	<div class="">
+		<div class="center">
+			<span class="logo"><img src="{% static 'img/logo.png' %}"></span>
+		</div>
+	</div>
+ <form action="{% url 'register' %}" method="POST">
+ {% csrf_token %}
+  <div class="input-field">
+   <input id="email" type="email" name="email" placeholder="Entrez e-mail" required/> 
+  </div>
+  <div class="input-field">
+    <select name='pays'>
+     <option value="disabled selected">Pays</option>
+     <option value="1">Burundi</option>
+     <option value="2">Rwanda</option>
+     <option value="3">Kenya</option>
+     <option value="4">Uganda</option>		
+    </select>	
+  </div>
+   <input id="password" type="password" name="password" placeholder="Mot de passe" required>
+   <input id="password2" type="password" name="password2" placeholder="V&eacute;rifiez le de passe">
+  <div class="center">
+  <p style="color:red">{{sapor}}</p>
+<center>    <button type="submit" class="btn btn-small">S'inscrire</button></center>
+  </div> 
+</form>
+   <div class="col s12">
+     <p class="left-align">Avez-vous d&eacute;j&agrave; un compte ?<a href="{%  url 'signin' %}">Connectez-vous.</a></p>
+   </div>
+</div>
+<d/div>
+</main>
+<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('select');
+			var instances = M.FormSelect.init(elems);
+		});
+	</script>
+{% endblock  %}

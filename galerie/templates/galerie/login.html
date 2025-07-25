@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static  %}
+{% block title %} {% endblock %}
+{% block content %}
+<style>
+.auth{
+	padding-top:40px;
+}
+.auth  .span{
+ font-size:15px;
+}
+.auth input{
+border:1px solid rgb(106,106,131) !important;
+padding-left:8px !important;
+border-radius:4px !important;
+
+}
+.auth .btn{
+  background-color:rgb(151.255,220) !important;
+  border:1px solid !important;
+  font-size:30px !impotant;
+  border-radius:4px !important
+}
+.auth .logo img {
+  width: 80px !important;
+}
+
+</style>
+<main class="container">
+ <div class="row auth">
+  <div class="col s12 l6 m8 offset-m2 offset-l3  head">
+    <div class="">
+		  <div class="center">
+    		<span class="logo"><img src="{% static 'img/logo.png' %}"></span>
+		  </div>
+      <p class="span blue-text center-align">Bienvenue sur Joliephoto</p>
+      <p class="center-align">Découvrez un espace unique pour stocker vos souvenirs précieux.Profitez d'une sécurité optimale pour vos photo et vidéos.</p>
+     </div>
+		
+    <form action="{% url 'signin' %}" method="POST">
+    {% csrf_token %}
+   <div class="input-field">
+
+      <input type="email" name="email" placeholder="Entrer e-mail" id="email" required>
+    
+     <input type="password" name="password"  placeholder="Entrer le mot de passe" id="password"required>
+     
+
+   </div>
+   	<center><button class="btn">Connexion</button></center>
+  </form>
+   <p>Etes-vous nouveau ? <a href="{% url 'register' %}">Créer un compte</a></p>
+  </div>
+ </div>
+</main>
+<p style="color:red;">{{sapor}}</p>
+{% endblock %}
